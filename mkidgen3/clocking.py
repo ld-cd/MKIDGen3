@@ -57,7 +57,7 @@ def start_clocks(programming_key=False):
         getLogger(__name__).warning('xrfclk/xrfdc unavaiable, clock will not be started')
         return
 
-    from mkidgen.util import get_board
+    from mkidgen3.util import get_board
 
     if programming_key is not False:
         _patch_xrfclk_lmk()
@@ -68,7 +68,7 @@ def start_clocks(programming_key=False):
         if programming_key == 'external_10mhz':
             raise ValueError('External 10 MHz is not supported on RFSoC4x2')
         elif programming_key == '4.096GSPS_MTS':
-            xrfclk.set_ref_clks(lmk_freq='256.0_MTS', lmx_freq='409.6_MTS')
+            xrfclk.set_ref_clks(lmk_freq='512.0_MTS', lmx_freq='512.0_MTS')
         elif programming_key == '5.000GSPS_MTS':
             xrfclk.set_ref_clks(lmk_freq='500.0_MTS', lmx_freq='500.0_MTS')
         else:
