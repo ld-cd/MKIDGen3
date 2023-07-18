@@ -56,12 +56,15 @@ def start_clocks(programming_key=False):
     except ImportError:
         getLogger(__name__).warning('xrfclk/xrfdc unavaiable, clock will not be started')
         return
+
+    from mkidgen.util import get_board
+
     if programming_key is not False:
         _patch_xrfclk_lmk()
 
-    board_name = subprocess.run(['cat', '/proc/device-tree/chosen/pynq_board'], capture_output=True, text=True).stdout
+    board_name = get_board()
 
-    if board_name == 'RFSoC4x2\x00':
+    if board_name == 'RFSoC4x2':
         if programming_key == 'external_10mhz':
             raise ValueError('External 10 MHz is not supported on RFSoC4x2')
         elif programming_key == '4.096GSPS_MTS':
@@ -71,7 +74,7 @@ def start_clocks(programming_key=False):
         else:
             xrfclk.set_ref_clks(lmk_freq=245.76, lmx_freq=409.6)
 
-    elif board_name == 'ZCU111\x00':
+    elif board_name == 'ZCU111':
         if programming_key == 'external_10mhz':
             xrfclk.set_ref_clks(lmk_freq='122.88_viaext10M', lmx_freq=409.6)
         else:
