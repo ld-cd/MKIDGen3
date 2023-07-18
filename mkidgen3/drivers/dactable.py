@@ -17,7 +17,7 @@ class DACTableAXIM(pynq.DefaultIP):
         ramp.real %= (2 ** 16)
         ramp.imag = ramp.real
         self.stop()
-        self.replay(ramp, tlast_every=tlast_every, fpgen=None)
+        self.replay(ramp, tlast_every=tlast_every, stop_if_needed=True, fpgen=None)
 
     def replay(self, data, tlast=True, tlast_every=256, replay_len=None, start=True,
                fpgen=lambda x: [FP16_15(v).__index__() for v in x], stop_if_needed=False):
